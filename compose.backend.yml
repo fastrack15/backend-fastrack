@@ -1,0 +1,40 @@
+services:
+  defect-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: defect-backend
+
+    restart: unless-stopped
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: survey_db
+      DB_USER: survey_user
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      UPLOADS_DIR: /opt/n8n/uploads
+
+      PHOTO_SERVER_URL: http://host.docker.internal:8765
+
+    volumes:
+      - /opt/n8n/uploads:/opt/n8n/uploads:ro
+
+    ports:
+      - "3001:3000"
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    networks:
+      - n8n_default
+
+networks:
+  n8n_default:
+    external: true
+    name: n8n_default
