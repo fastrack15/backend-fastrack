@@ -20,8 +20,6 @@ services:
 
       UPLOADS_DIR: /opt/n8n/uploads
 
-      PHOTO_SERVER_URL: http://host.docker.internal:8765
-
     volumes:
       - /opt/n8n/uploads:/opt/n8n/uploads:ro
 
