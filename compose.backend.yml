@@ -16,7 +16,7 @@ services:
       DB_PORT: 5432
       DB_NAME: survey_db
       DB_USER: survey_user
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PASSWORD: Hutama123!
 
       UPLOADS_DIR: /opt/n8n/uploads
 
