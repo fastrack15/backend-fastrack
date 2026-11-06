@@ -69,3 +69,19 @@ export async function updateDefectLocation(dataId, latitude, longitude) {
 
   return result.rows[0];
 }
+
+// Temporary Delete
+export async function softDeleteDefect(dataId) {
+  const result = await pool.query(
+    `
+    UPDATE public.table_data
+    SET delete_data = 1
+    WHERE data_id = $1
+      AND delete_data = 0
+    RETURNING data_id, delete_data
+    `,
+    [dataId],
+  );
+
+  return result.rows[0];
+}

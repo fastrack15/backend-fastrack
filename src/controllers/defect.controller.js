@@ -1,4 +1,5 @@
 import {
+  softDeleteDefect,
   updateDefectLocation,
   updateDefectTarget,
 } from "../services/defect.service.js";
@@ -55,5 +56,28 @@ export async function updateLocation(req, res) {
   } catch (err) {
     console.error("Gagal memperbarui lokasi defect:", err);
     return fail(res, 500, "Terjadi kesalahan saat menyimpan lokasi defect.");
+  }
+}
+
+export async function deleteDefect(req, res) {
+  const dataId = String(req.params.id ?? "").trim();
+
+  if (!dataId) return fail(res, 400, "ID data defect tidak valid.");
+
+  try {
+    const row = await softDeleteDefect(dataId);
+
+    if (!row) {
+      return fail(res, 404, "Data defect tidak ditemukan atau sudah dihapus.");
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Data berhasil dihapus.",
+      data: row,
+    });
+  } catch (error) {
+    console.error("Gagal menghapus data defect:", error);
+    return fail(res, 500, "Terjadi kesalahan saat menghapus data.");
   }
 }
