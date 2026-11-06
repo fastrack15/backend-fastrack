@@ -4,8 +4,9 @@ services:
       context: .
       dockerfile: Dockerfile
 
-    container_name: defect-backend
+    pull_policy: build
 
+    container_name: defect-backend
     restart: unless-stopped
 
     environment:
