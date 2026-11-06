@@ -19,6 +19,7 @@ export async function getAllDefects() {
     LEFT JOIN public.table_progress AS prg ON prg.id = da.photo_progress
     LEFT JOIN public.table_perbaikan AS prb ON prb.id = da.photo_perbaikan
     LEFT JOIN public.table_event AS eve ON eve.secret_id = da.event_id
+    WHERE da.delete_data = 0
   `);
 
   return result.rows;
