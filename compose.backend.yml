@@ -13,11 +13,13 @@ services:
       NODE_ENV: production
       PORT: 3000
 
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: survey_db
-      DB_USER: survey_user
-      DB_PASSWORD: Hutama123!
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+      JWT_SECRET: ${JWT_SECRET}
 
       UPLOADS_DIR: /opt/n8n/uploads
 
