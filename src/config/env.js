@@ -12,6 +12,9 @@ export const env = {
     password: process.env.DB_PASSWORD,
   },
 
+  jwtSecret: process.env.JWT_SECRET,
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "8h",
+
   // Folder foto yang disajikan langsung sebagai file statis.
   uploadsDir: process.env.UPLOADS_DIR || "/opt/n8n/uploads",
 
