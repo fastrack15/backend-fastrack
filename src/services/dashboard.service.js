@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 export async function getAllDefects(user) {
-  const isAdmin = user?.role === "admin";
+  const hasAllRuasAccess = user?.role === "superadmin";
   const userRuas = Array.isArray(user?.ruas) ? user.ruas : [];
 
   const result = await pool.query(
@@ -24,7 +24,7 @@ export async function getAllDefects(user) {
     LEFT JOIN public.table_event AS eve ON eve.secret_id = da.event_id
     WHERE da.delete_data = 0
       AND ($1::boolean = TRUE OR eve.ruas = ANY($2::text[]))`,
-    [isAdmin, userRuas],
+    [hasAllRuasAccess, userRuas],
   );
 
   return result.rows;

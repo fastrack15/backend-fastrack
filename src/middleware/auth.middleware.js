@@ -19,12 +19,10 @@ export const authenticate = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          message: "Token authentication tidak ditemukan",
-        });
+      return res.status(401).json({
+        success: false,
+        message: "Token authentication tidak ditemukan",
+      });
     }
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, env.jwtSecret);
@@ -36,23 +34,23 @@ export const authenticate = (req, res, next) => {
     };
     next();
   } catch (error) {
-    return res
-      .status(401)
-      .json({
-        success: false,
-        message: "Token tidak valid atau sudah kedaluwarsa",
-      });
+    return res.status(401).json({
+      success: false,
+      message: "Token tidak valid atau sudah kedaluwarsa",
+    });
   }
 };
 
-// Middleware khusus admin
-export const authorizeAdmin = (req, res, next) => {
-  if (req.user?.role !== "admin") {
-    return res.status(403).json({
-      success: false,
-      message: "Anda tidak memiliki hak akses",
-    });
-  }
+// Middleware cek role
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({
+        success: false,
+        message: "Anda tidak memiliki hak akses",
+      });
+    }
 
-  next();
+    next();
+  };
 };

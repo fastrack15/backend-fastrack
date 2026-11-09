@@ -11,8 +11,6 @@ export async function dbHealth(req, res) {
     res.json({
       success: true,
       message: "Koneksi PostgreSQL berhasil",
-      database: row.database,
-      serverTime: row.server_time,
     });
   } catch (error) {
     console.error("Database connection error:", error.message);

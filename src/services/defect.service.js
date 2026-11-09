@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 const accessParams = (user) => [
-  user?.role === "admin",
+  user?.role === "superadmin",
   Array.isArray(user?.ruas) ? user.ruas : [],
 ];
 

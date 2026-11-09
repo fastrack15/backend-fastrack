@@ -1,13 +1,21 @@
 import { Router } from "express";
+
 import {
   deleteDefect,
   updateLocation,
   updateTarget,
 } from "../controllers/defect.controller.js";
-import { authenticate } from "../middleware/auth.middleware.js";
+
+import { authenticate, authorizeRoles } from "../middleware/auth.middleware.js";
 
 const router = Router();
-router.put("/:id/target", authenticate, updateTarget);
-router.put("/:id/location", authenticate, updateLocation);
-router.put("/:id/delete", authenticate, deleteDefect);
+
+const canManageDefect = authorizeRoles("superadmin", "admin");
+
+router.put("/:id/target", authenticate, canManageDefect, updateTarget);
+
+router.put("/:id/location", authenticate, canManageDefect, updateLocation);
+
+router.put("/:id/delete", authenticate, canManageDefect, deleteDefect);
+
 export default router;
