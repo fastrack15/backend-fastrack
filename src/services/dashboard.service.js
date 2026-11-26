@@ -16,12 +16,17 @@ export async function getAllDefects(user) {
       prg.nama AS nama_progress,
       prb.nama AS nama_perbaikan,
       eve.kegiatan,
-      eve.ruas
+      eve.ruas,
+      app.nama AS nama_approved,
+      app.path AS path_approved,
+      app.created_at AS created_approved,
+      app.id_data AS id_data_defect
     FROM public.table_data AS da
     LEFT JOIN public.table_defect AS de ON de.id = da.photo_defect
     LEFT JOIN public.table_progress AS prg ON prg.id = da.photo_progress
     LEFT JOIN public.table_perbaikan AS prb ON prb.id = da.photo_perbaikan
     LEFT JOIN public.table_event AS eve ON eve.secret_id = da.event_id
+    LEFT JOIN public.table_approved AS app ON app.id_data = da.data_id
     WHERE da.delete_data = 0
       AND ($1::boolean = TRUE OR eve.ruas = ANY($2::text[]))`,
     [hasAllRuasAccess, userRuas],
