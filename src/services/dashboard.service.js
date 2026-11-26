@@ -17,6 +17,8 @@ export async function getAllDefects(user) {
       prb.nama AS nama_perbaikan,
       eve.kegiatan,
       eve.ruas,
+      app.id AS approved_id,
+      app.file_unique AS approved_file_unique,
       app.nama AS nama_approved,
       app.path AS path_approved,
       app.created_at AS created_approved,
